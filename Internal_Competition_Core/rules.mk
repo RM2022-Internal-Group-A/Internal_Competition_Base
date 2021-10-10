@@ -1,0 +1,4 @@
+
+# FreeRTOS
+RTOS_PATH = $(CORE_DIR)/RTOS
+include $(RTOS_PATH)/RTOS.mk
