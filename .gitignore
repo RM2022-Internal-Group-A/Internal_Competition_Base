@@ -1,0 +1,8 @@
+# .mxproject holds project path information, which should be unique for each developer
+.mxproject
+
+# all of the compilation generated files
+build/
+
+# vscode configuration files
+.vscode/
