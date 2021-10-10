@@ -19,7 +19,11 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c \
 Src/system_stm32f1xx.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c
+Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c \
+Src/os.c
+
+CPP_SRC += \
+Src/ApplicationTasks.cpp
 
 # ASM sources
 ASM_SOURCES =  \
