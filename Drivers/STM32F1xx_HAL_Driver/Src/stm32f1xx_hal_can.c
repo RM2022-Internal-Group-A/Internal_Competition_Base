@@ -1219,6 +1219,7 @@ uint32_t HAL_CAN_IsSleepActive(CAN_HandleTypeDef *hcan)
   *         This parameter can be a value of @arg CAN_Tx_Mailboxes.
   * @retval HAL status
   */
+ static volatile int errCnt = 0;
 HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, CAN_TxHeaderTypeDef *pHeader, uint8_t aData[], uint32_t *pTxMailbox)
 {
   uint32_t transmitmailbox;
@@ -1306,7 +1307,7 @@ HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, CAN_TxHeaderType
     {
       /* Update error code */
       hcan->ErrorCode |= HAL_CAN_ERROR_PARAM;
-
+errCnt++;
       return HAL_ERROR;
     }
   }
