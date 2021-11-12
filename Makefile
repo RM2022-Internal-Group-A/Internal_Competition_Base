@@ -25,7 +25,8 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.c
 
 CPP_SRC += \
-Src/ApplicationTasks.cpp
+Src/ApplicationTasks.cpp\
+Src/DR16_Receiver/function.cpp\
 
 # ASM sources
 ASM_SOURCES =  \
@@ -49,7 +50,9 @@ C_INCLUDES =  \
 -IDrivers/STM32F1xx_HAL_Driver/Inc \
 -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F1xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-ISrc/DR16_Receiver \
+
 
 include core.mk
 

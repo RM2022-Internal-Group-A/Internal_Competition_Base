@@ -2,27 +2,34 @@
 
 #include <FreeRTOS.h>
 #include <task.h>
+#include "function.h"
 
 static StaticTask_t blinkTask;
 static StackType_t blinkTaskStack[128];
+
+//static StaticTask_t ReceiveTask;
+//static StackType_t ReceiveTaskStack[128];
+
 void blinkTaskFunc(void *param);
+//void ReceiveFunc(void *param);
 
 extern "C"
 {
     void startUserTasks()
     {
         xTaskCreateStatic(blinkTaskFunc, "blink", 128, NULL, 1, blinkTaskStack, &blinkTask);
+        //xTaskCreateStatic(ReceiveFunc, "receive", 128, NULL, 1, ReceiveTaskStack, &ReceiveTask);
     }
 }
 
 static volatile uint32_t blinkCounter = 1;
 void blinkTaskFunc(void *param)
 {
-    static CAN_RxHeaderTypeDef rxHeader;                         //CAN Bus Transmit Header
-    CAN_TxHeaderTypeDef txHeader;                                //CAN Bus Receive Header
-    static volatile uint8_t canRX[8] = {0, 0, 0, 0, 0, 0, 0, 0}; //CAN Bus Receive Buffer
+    static CAN_RxHeaderTypeDef rxHeader;                         // CAN Bus Transmit Header
+    CAN_TxHeaderTypeDef txHeader;                                // CAN Bus Receive Header
+    static volatile uint8_t canRX[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // CAN Bus Receive Buffer
     static volatile uint16_t encoder = 0;
-    CAN_FilterTypeDef canfil; //CAN Bus Filter
+    CAN_FilterTypeDef canfil; // CAN Bus Filter
     uint32_t canMailbox;
 
     canfil.FilterBank = 0;
@@ -58,3 +65,30 @@ void blinkTaskFunc(void *param)
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
+
+uint8_t data_in[16];
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+    RemoteDataProcess(data_in);
+    USART2_IRQHandler();
+    HAL_UART_Receive_IT(&huart2, data_in, sizeof(data_in));
+
+}
+
+/*void ReceiveFunc(void *param)
+{
+    RC_Init();
+    uint8_t data_in[16];
+
+        RemoteDataProcess(data_in);
+        USART2_IRQHandler(void);
+        HAL_UART_Receive_IT(&huart2, data_in, sizeof(data_in));
+    
+
+    
+
+        HAL_UART_Receive_IT(&huart2, data_in, sizeof(data_in));
+    
+}
+*/
